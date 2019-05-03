@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <Editor :title="currentDoc.title" :text="currentDoc.body" :id="currentDoc._id" v-on:change="onChange"/>
+    <Editor
+      :title="currentDoc.title"
+      :text="currentDoc.body"
+      :id="currentDoc._id"
+      v-on:change="onChange"
+    />
     <Preview :text="currentDoc.body"/>
     <h1>Documents</h1>
     <div class="document-container">
@@ -11,6 +16,7 @@
         @click="select(document)"
       >{{document.title}}</div>
     </div>
+    <div class="option" @click="add">Add</div>
   </div>
 </template>
 
@@ -18,14 +24,13 @@
 import Editor from "./Editor";
 import Preview from "./Preview";
 import DocumentService from "../DocumentService";
-// import marked from "marked";
 
 export default {
   name: "DocumentComponent",
   data() {
     return {
       currentDoc: {
-        id: "",
+        id: 0,
         body: "",
         title: ""
       },
@@ -43,12 +48,28 @@ export default {
   },
   methods: {
     select(document) {
-      this.currentDoc = document; 
+      this.currentDoc = document;
     },
     onChange(title, text) {
-      console.log(`Changed ${title} and ${body}`)
       this.currentDoc.body = text;
       this.currentDoc.title = title;
+    },
+    add() {
+      var newDoc = {
+        id: 0,
+        body: "",
+        title: ""
+      };
+      this.currentDoc = newDoc;
+    },
+    save() {
+      if (this.currentDoc._id != 0) {
+        DocumentService.deleteById(this.currentDoc._id);
+      }
+      DocumentService.insertDocument(
+        this.currentDoc.title,
+        this.currentDoc.body
+      );
     }
   },
   components: {
