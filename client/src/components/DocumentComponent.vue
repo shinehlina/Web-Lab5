@@ -1,34 +1,38 @@
 <template>
   <div class="container">
-    <h1> Documents</h1>
+    <h1>Documents</h1>
     <div class="document-container">
-      <div class="document" 
-      v-for="document in documents"
-      v-bind:key="document._id"
-      >
-          <b>{{document.title}}</b>
-          <p>
-          {{document.body}}
-          </p>
+      <div class="document" v-for="document in documents" v-bind:key="document._id">
+        <b>{{document.title}}</b>
+        <p>{{document.body}}</p>
+        <!-- <div class="output" v-html="compiledMarkdown"></div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import DocumentService from '../DocumentService'
+import DocumentService from "../DocumentService";
+import marked from "marked";
 
 export default {
-  name: 'DocumentComponent',
+  name: "DocumentComponent",
   data() {
     return {
       documents: [],
-    }
+    };
   },
   created() {
-    DocumentService.getDocuments().then(res => {this.documents = res.data;});
-  } 
-}
+    DocumentService.getDocuments().then(res => {
+      this.documents = res.data;
+    });
+  }
+  // computed: {
+  //   compiledMarkdown() {
+  //     return marked(this.documents.body, { sanitize: true });
+  //   }
+  // }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
