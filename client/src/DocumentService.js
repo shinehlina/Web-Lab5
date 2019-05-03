@@ -18,6 +18,10 @@ class DocumentService {
     static deleteById(id) {
         return axios.delete(`${url}${id}`);
     }
+
+    static getDocumentById(id) {
+        return axios.get(`${url}${id}`);
+    }
 }
 
 export default DocumentService;

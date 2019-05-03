@@ -1,17 +1,35 @@
 <template>
   <div class="editor">
-    <h1>Editor</h1>
-    <textarea></textarea>
+    <h1>{{title}}</h1>
+    <textarea v-model="text"></textarea>
     <br>
     <label></label>
-    <button class="remove">Remove</button>
+    <button class="remove" @click="remove(id)">Remove</button>
     <button class="save">Save</button>
   </div>
 </template>
 
 <script>
+import DocumentService from "../DocumentService";
+
 export default {
-  name: "Editor"
+  name: "Editor",
+  props: {
+    title: {
+      default: ""
+    },
+    text: {
+      default: ""
+    },
+    id: {
+      default: ""
+    }
+  },
+  methods: {
+    remove(id) {
+      DocumentService.deleteById(id);
+    }
+  }
 };
 </script>
 
@@ -28,7 +46,7 @@ textarea {
   padding: 20px;
 }
 label {
-    width: 49%;
+  width: 49%;
 }
 </style>
 

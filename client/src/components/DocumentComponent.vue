@@ -1,35 +1,54 @@
 <template>
   <div class="container">
-    <Editor/>
+    <Editor :title="currentDoc.title" :text="currentDoc.body" :id="currentDoc._id"/>
+    <Preview/>
     <h1>Documents</h1>
     <div class="document-container">
-      <div class="document" v-for="document in documents" v-bind:key="document._id">
-        <b>{{document.title}}</b>
-      </div>
+      <div
+        class="document"
+        v-for="document in documents"
+        v-bind:key="document._id"
+        @click="select(document)"
+      >{{document.title}}</div>
     </div>
   </div>
 </template>
 
 <script>
 import Editor from "./Editor";
+import Preview from "./Preview";
 import DocumentService from "../DocumentService";
-import marked from "marked";
+// import marked from "marked";
 
 export default {
   name: "DocumentComponent",
   data() {
     return {
-      input: "#Hello",
+      currentDoc: {
+        id: "",
+        body: "",
+        title: ""
+      },
       documents: []
     };
   },
-  created() {
-    DocumentService.getDocuments().then(res => {
-      this.documents = res.data;
-    });
+  async created() {
+    var res = await DocumentService.getDocuments();
+    this.documents = res.data;
+    if (res.data.length > 0) {
+      this.currentDoc = res.data[0];
+    }
+    // eslint-disable-next-line
+    console.log(res.data[0].body);
+  },
+  methods: {
+    select(document) {
+      this.currentDoc = document; 
+    }
   },
   components: {
-    Editor
+    Editor,
+    Preview
   }
 };
 </script>
