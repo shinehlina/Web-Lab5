@@ -1,12 +1,15 @@
-"use strict";
+const app = require('./app');
+const database = require('./database');
+const config = require('./config');
 
-var express = require("express");
-var app = express();
-
-app.get("/", function(req, res) {
-  res.send("Hello World!");
-});
-
-app.listen(3000, function() {
-  console.log("Example app listening on port 3000!");
-});
+database()
+  .then(info => {
+    console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    app.listen(config.PORT, () =>
+      console.log(`Example app listening on port ${config.PORT}!`)
+    );
+  })
+  .catch(() => {
+    console.error('Unable to connect to database');
+    process.exit(1);
+  });
