@@ -1,4 +1,4 @@
-const config = require('config');
+const config = require('./config');
 const mongoose = require('mongoose');
 
 module.exports = () => {
@@ -11,6 +11,6 @@ module.exports = () => {
       .on('close', () => console.log('Database connection closed.'))
       .once('open', () => resolve(mongoose.connections[0]));
 
-    mongoose.connect(config.MONGO_URL, { useMongoClient: true });
+    mongoose.connect(config.MONGO_URL, { useNewUrlParser: true });
   });
 };
