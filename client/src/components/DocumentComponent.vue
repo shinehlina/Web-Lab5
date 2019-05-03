@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Editor :title="currentDoc.title" :text="currentDoc.body" :id="currentDoc._id"/>
-    <Preview/>
+    <Editor :title="currentDoc.title" :text="currentDoc.body" :id="currentDoc._id" v-on:change="onChange"/>
+    <Preview :text="currentDoc.body"/>
     <h1>Documents</h1>
     <div class="document-container">
       <div
@@ -44,6 +44,11 @@ export default {
   methods: {
     select(document) {
       this.currentDoc = document; 
+    },
+    onChange(title, text) {
+      console.log(`Changed ${title} and ${body}`)
+      this.currentDoc.body = text;
+      this.currentDoc.title = title;
     }
   },
   components: {

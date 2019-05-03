@@ -1,6 +1,8 @@
 <template>
   <div class="editor">
-    <h1>{{title}}</h1>
+    <h1>
+      <input v-model="title">
+    </h1>
     <textarea v-model="text"></textarea>
     <br>
     <label></label>
@@ -28,6 +30,11 @@ export default {
   methods: {
     remove(id) {
       DocumentService.deleteById(id);
+    },
+    textChanged() {
+      // eslint-disable-next-line
+      console.log(this.text);
+      this.$emit("change", this.title, this.text);
     }
   }
 };

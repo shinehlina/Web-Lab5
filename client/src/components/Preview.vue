@@ -2,25 +2,27 @@
   <div class="preview">
     <h1>Preview</h1>
     <br>
-    <!-- <div class="output" v-html="compiledMarkdown"></div> -->
+    <div v-html="compiledMarkdown"></div>
   </div>
 </template>
 
 <script>
-//   import marked from 'marked';
+import marked from "marked";
 
-  export default {
-    name: 'Preview',
-    props: {
-        text: {
-            type: String,
-            default: "#Hello"
-        }
-    },
-    computed: {
-    //   compiledMarkdown() {
-    //     return marked(this.markdown, {sanitize: true});
-    //   }
+export default {
+  name: "Preview",
+  props: {
+    text: {
+      type: String,
+      default: "#Hello"
+    }
+  },
+  computed: {
+    compiledMarkdown() {
+      // eslint-disable-next-line
+      console.log(marked);
+      return marked(this.text, { sanitize: true });
     }
   }
+};
 </script>
