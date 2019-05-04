@@ -1,13 +1,13 @@
 <template>
   <div class="editor">
     <h1>
-      <input v-model="title">
+      <input v-model="doc.title">
     </h1>
-    <textarea v-model="text"></textarea>
+    <textarea v-model="doc.body"></textarea>
     <br>
     <label></label>
-    <button class="remove" @click="remove(id)">Remove</button>
-    <button class="save">Save</button>
+    <button class="remove" @click="remove(doc.id)">Remove</button>
+    <button class="save" @click="save(doc.title, doc.body, doc._id)">Save</button>
   </div>
 </template>
 
@@ -17,14 +17,12 @@ import DocumentService from "../DocumentService";
 export default {
   name: "Editor",
   props: {
-    title: {
-      default: ""
-    },
-    text: {
-      default: ""
-    },
-    id: {
-      default: ""
+    doc: {
+      default: {
+        title: "",
+        text: "",
+        _id: 0
+      }
     }
   },
   methods: {
@@ -32,9 +30,15 @@ export default {
       DocumentService.deleteById(id);
     },
     textChanged() {
+        this.$emit("change", this.doc);
+    },
+    save(title, body, id) {
+      if (id != 0) {
+        DocumentService.deleteById(id);
+      }
       // eslint-disable-next-line
-      console.log(this.text);
-      this.$emit("change", this.title, this.text);
+      console.log(title + "    " + body);
+      DocumentService.insertDocument(title, body);
     }
   }
 };

@@ -1,9 +1,7 @@
 <template>
   <div class="container">
     <Editor
-      :title="currentDoc.title"
-      :text="currentDoc.body"
-      :id="currentDoc._id"
+      :doc="currentDoc"
       v-on:change="onChange"
     />
     <Preview :text="currentDoc.body"/>
@@ -43,8 +41,8 @@ export default {
     if (res.data.length > 0) {
       this.currentDoc = res.data[0];
     }
-    // eslint-disable-next-line
-    console.log(res.data[0].body);
+    // // eslint-disable-next-line
+    // console.log(res.data[0].body);
   },
   methods: {
     select(document) {
@@ -61,15 +59,6 @@ export default {
         title: ""
       };
       this.currentDoc = newDoc;
-    },
-    save() {
-      if (this.currentDoc._id != 0) {
-        DocumentService.deleteById(this.currentDoc._id);
-      }
-      DocumentService.insertDocument(
-        this.currentDoc.title,
-        this.currentDoc.body
-      );
     }
   },
   components: {
