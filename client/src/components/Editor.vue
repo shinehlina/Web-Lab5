@@ -1,13 +1,13 @@
 <template>
   <div class="editor">
     <h1>
-      <input v-model="doc.title">
+      <input v-model="doc.title" @change="change">
     </h1>
-    <textarea v-model="doc.body"></textarea>
+    <textarea v-model="doc.body" @change="change"></textarea>
     <br>
     <label></label>
     <button class="remove" @click="remove(doc.id)">Remove</button>
-    <button class="save" @click="save(doc.title, doc.body, doc._id)">Save</button>
+    <!-- <button class="save" @click="save(doc.title, doc.body, doc._id)">Save</button> -->
   </div>
 </template>
 
@@ -30,12 +30,15 @@ export default {
       await DocumentService.deleteById(id);
       this.$emit("render");
     },
-    async save(title, body, id) {
-      if (id != 0) {
-        DocumentService.deleteById(id);
-      }
-      await DocumentService.insertDocument(title, body);
-      this.$emit("render");
+    // async save(title, body, id) {
+    //   if (id) {
+    //     DocumentService.deleteById(id);
+    //   }
+    //   await DocumentService.insertDocument(title, body);
+    //   this.$emit("render");
+    // },
+    change() {
+      this.$emit("change");
     }
   }
 };

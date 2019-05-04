@@ -1,7 +1,5 @@
 <template>
   <div class="preview">
-    <h1>Preview</h1>
-    <br>
     <div class = "preview-md" v-html="compiledMarkdown"></div>
   </div>
 </template>

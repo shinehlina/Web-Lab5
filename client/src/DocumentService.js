@@ -26,6 +26,19 @@ class DocumentService {
   static getDocumentById(id) {
     return axios.get(`${url}${id}`);
   }
+
+  static updateById(id, title, body) {
+    // eslint-disable-next-line
+    console.log(id);
+    return axios.post(
+      `${url}update/${id}`,
+      {
+        title: title,
+        body: body
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+  }
 }
 
 export default DocumentService;

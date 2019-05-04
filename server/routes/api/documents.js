@@ -13,14 +13,14 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/create", (req, res) => res.render("create"));
+// router.get("/create", (req, res) => res.render("create"));
 router.post("/create", (req, res) => {
   Document.create({
     title: req.body.title,
     body: req.body.body
-  }).then(post => console.log(post.id));
-
-  res.status(201).send();
+  }).then(post => {
+    res.send(post.id);
+  });
 });
 
 router.delete("/:id", (req, res) => {
@@ -37,6 +37,19 @@ router.get("/:id", (req, res) => {
     .catch(err => {
       res.status(200).json({ err: err });
     });
+});
+
+router.post("/update/:id", (req, res) => {
+  console.log(`${req.params.id} text ${req.body.body} title ${req.body.title}`);
+  Document.findByIdAndUpdate(
+    req.params.id,
+    { title: req.body.title, body: req.body.body },
+    function(err) {
+      console.log(err);
+    }
+  ).then(ans => {
+    res.status(201).send();
+  });
 });
 
 module.exports = router;

@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <Editor :doc="currentDoc" v-on:render="rerenderList"/>
-    <Preview :text="currentDoc.body"/>
+    <Editor :doc="currentDoc" v-on:render="rerenderList" v-on:change="onChange"/>
+    <p>
+      <Preview :text="currentDoc.body"/>
+    </p>
     <h1>Documents</h1>
     <div class="document-container">
       <div
@@ -45,24 +47,40 @@ export default {
     select(document) {
       this.currentDoc = document;
     },
-    onChange(title, text) {
-      this.currentDoc.body = text;
-      this.currentDoc.title = title;
+    async onChange() {
+      // eslint-disable-next-line
+      console.log(this.currentDoc._id + this.currentDoc.title);
+      if (this.currentDoc._id) {
+        await DocumentService.updateById(
+          this.currentDoc.id,
+          this.currentDoc.title,
+          this.currentDoc.body
+        );
+      } else {
+        var res = await DocumentService.insertDocument(
+          this.currentDoc.title,
+          this.currentDoc.body
+        );
+        this.currentDoc._id = res.body;
+        // eslint-disable-next-line
+        console.log(this.currentDoc._id);
+      }
+      this.rerenderList();
     },
     add() {
       var newDoc = {
-        id: 0,
-        body: "",
-        title: ""
+        body: "New text",
+        title: "New Title",
+        id: undefined
       };
       this.currentDoc = newDoc;
     },
     async rerenderList() {
       var res = await DocumentService.getDocuments();
       this.documents = res.data;
-      if (res.data.length > 0) {
-        this.currentDoc = res.data[0];
-      }
+      // if (res.data.length > 0) {
+      //   this.currentDoc = res.data[0];
+      // }
     }
   },
   components: {
