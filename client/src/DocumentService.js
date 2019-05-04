@@ -9,7 +9,6 @@ class DocumentService {
   }
 
   static insertDocument(title, body) {
-    console.log(title + "     " + body);
     return axios.post(
       `${url}create`,
       {
