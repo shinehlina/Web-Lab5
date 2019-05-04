@@ -26,19 +26,16 @@ export default {
     }
   },
   methods: {
-    remove(id) {
-      DocumentService.deleteById(id);
+    async remove(id) {
+      await DocumentService.deleteById(id);
+      this.$emit("render");
     },
-    textChanged() {
-        this.$emit("change", this.doc);
-    },
-    save(title, body, id) {
+    async save(title, body, id) {
       if (id != 0) {
         DocumentService.deleteById(id);
       }
-      // eslint-disable-next-line
-      console.log(title + "    " + body);
-      DocumentService.insertDocument(title, body);
+      await DocumentService.insertDocument(title, body);
+      this.$emit("render");
     }
   }
 };

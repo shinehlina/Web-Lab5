@@ -1,9 +1,6 @@
 <template>
   <div class="container">
-    <Editor
-      :doc="currentDoc"
-      v-on:change="onChange"
-    />
+    <Editor :doc="currentDoc" v-on:render="rerenderList"/>
     <Preview :text="currentDoc.body"/>
     <h1>Documents</h1>
     <div class="document-container">
@@ -14,7 +11,9 @@
         @click="select(document)"
       >{{document.title}}</div>
     </div>
-    <div class="option" @click="add">Add</div>
+    <div class="option" @click="add">
+      <h3>Add</h3>
+    </div>
   </div>
 </template>
 
@@ -41,8 +40,6 @@ export default {
     if (res.data.length > 0) {
       this.currentDoc = res.data[0];
     }
-    // // eslint-disable-next-line
-    // console.log(res.data[0].body);
   },
   methods: {
     select(document) {
@@ -59,6 +56,13 @@ export default {
         title: ""
       };
       this.currentDoc = newDoc;
+    },
+    async rerenderList() {
+      var res = await DocumentService.getDocuments();
+      this.documents = res.data;
+      if (res.data.length > 0) {
+        this.currentDoc = res.data[0];
+      }
     }
   },
   components: {
