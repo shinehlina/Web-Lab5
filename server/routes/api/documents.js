@@ -19,7 +19,7 @@ router.post("/create", (req, res) => {
     title: req.body.title,
     body: req.body.body
   }).then(post => {
-    res.send(post.id);
+    res.send(post);
   });
 });
 

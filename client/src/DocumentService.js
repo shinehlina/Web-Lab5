@@ -28,8 +28,6 @@ class DocumentService {
   }
 
   static updateById(id, title, body) {
-    // eslint-disable-next-line
-    console.log(id);
     return axios.post(
       `${url}update/${id}`,
       {

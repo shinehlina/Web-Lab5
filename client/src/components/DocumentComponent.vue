@@ -48,8 +48,6 @@ export default {
       this.currentDoc = document;
     },
     async onChange() {
-      // eslint-disable-next-line
-      console.log(this.currentDoc._id + this.currentDoc.title);
       if (this.currentDoc._id) {
         await DocumentService.updateById(
           this.currentDoc.id,
@@ -62,25 +60,17 @@ export default {
           this.currentDoc.body
         );
         this.currentDoc._id = res.body;
-        // eslint-disable-next-line
-        console.log(this.currentDoc._id);
       }
       this.rerenderList();
     },
-    add() {
-      var newDoc = {
-        body: "New text",
-        title: "New Title",
-        id: undefined
-      };
-      this.currentDoc = newDoc;
+    async add() {
+      var res = await DocumentService.insertDocument("New Title", "New text");
+      this.currentDoc = res.data;
+      this.rerenderList();
     },
     async rerenderList() {
       var res = await DocumentService.getDocuments();
       this.documents = res.data;
-      // if (res.data.length > 0) {
-      //   this.currentDoc = res.data[0];
-      // }
     }
   },
   components: {
@@ -90,7 +80,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

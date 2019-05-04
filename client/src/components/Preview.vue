@@ -25,7 +25,6 @@ export default {
 
 <style>
 .preview-md {
-  width: 49%;
   border: none;
   border-right: 1px solid #ccc;
   /* resize: none; */
@@ -33,5 +32,6 @@ export default {
   font-size: 14px;
   font-family: "Monaco", courier, monospace;
   padding: 20px;
+  text-align: start;
 }
 </style>

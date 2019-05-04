@@ -7,7 +7,6 @@
     <br>
     <label></label>
     <button class="remove" @click="remove(doc.id)">Remove</button>
-    <!-- <button class="save" @click="save(doc.title, doc.body, doc._id)">Save</button> -->
   </div>
 </template>
 
@@ -30,13 +29,6 @@ export default {
       await DocumentService.deleteById(id);
       this.$emit("render");
     },
-    // async save(title, body, id) {
-    //   if (id) {
-    //     DocumentService.deleteById(id);
-    //   }
-    //   await DocumentService.insertDocument(title, body);
-    //   this.$emit("render");
-    // },
     change() {
       this.$emit("change");
     }
@@ -46,7 +38,7 @@ export default {
 
 <style scoped>
 textarea {
-  width: 49%;
+  width: 98%;
   border: none;
   border-right: 1px solid #ccc;
   /* resize: none; */
