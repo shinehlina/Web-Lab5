@@ -13,7 +13,6 @@ router.get("/", (req, res) => {
     });
 });
 
-// router.get("/create", (req, res) => res.render("create"));
 router.post("/create", (req, res) => {
   Document.create({
     title: req.body.title,
