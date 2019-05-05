@@ -1,12 +1,12 @@
 <template>
-  <div class="editor">
+  <div>
     <h1>
       <input v-model="doc.title" @change="change">
     </h1>
     <textarea v-model="doc.body" @change="change"></textarea>
     <br>
     <label></label>
-    <button class="remove" @click="remove(doc.id)">Remove</button>
+    <button @click="remove(doc.id)">Remove</button>
   </div>
 </template>
 

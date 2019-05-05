@@ -1,19 +1,18 @@
 <template>
-  <div class="container">
+  <div>
     <Editor :doc="currentDoc" v-on:render="rerenderList" v-on:change="onChange"/>
     <p>
       <Preview :text="currentDoc.body"/>
     </p>
     <h1>Documents</h1>
-    <div class="document-container">
+    <div>
       <div
-        class="document"
         v-for="document in documents"
         v-bind:key="document._id"
         @click="select(document)"
       >{{document.title}}</div>
     </div>
-    <div class="option" @click="add">
+    <div @click="add">
       <h3>Add</h3>
     </div>
   </div>

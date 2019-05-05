@@ -1,5 +1,5 @@
 <template>
-  <div class="preview">
+  <div>
     <div class = "preview-md" v-html="compiledMarkdown"></div>
   </div>
 </template>
